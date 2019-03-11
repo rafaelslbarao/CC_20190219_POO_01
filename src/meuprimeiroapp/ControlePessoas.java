@@ -11,10 +11,10 @@ import java.util.ArrayList;
  *
  * @author Rafael
  */
-public final class ControlePessoas {
+public class ControlePessoas {
 
+    private static final Integer CODIGO_INICIAL = 1;
     
-
     private ControlePessoas() {
     }
 
@@ -27,14 +27,15 @@ public final class ControlePessoas {
     }
 
     public static boolean isEnderecoValido(String endereco) {
-        return (endereco != null && endereco.length() > 10 ? true : false);
+        boolean resultado = (endereco != null && endereco.length() > 10 ? true : false);
+        return resultado;
     }
 
     public static boolean isNomeValido(String nome) {
         return (nome != null && nome.length() > 5);
     }
 
-    public static final Integer CODIGO_INICIAL = 1;
+    
     
     public static Integer getProximoCodigo(ArrayList<Pessoa> pessoas) 
     {
@@ -50,18 +51,16 @@ public final class ControlePessoas {
 
     }
 
-    static boolean isCodigoValido(Integer codigo) {
+    public static boolean isCodigoValido(Integer codigo) {
         return (codigo != null && codigo > 0);
     }
 
-    static void salvaPessoa(String codigo,
+    public static void salvaPessoa(String codigo,
              String nome,
              String endereco,
              String telefone,
              ArrayList<Pessoa> listaDePessoas) {
-        Pessoa pessoa = new Pessoa();
-        pessoa.setCodigo(codigo);
-        pessoa.setNome(nome);
+        Pessoa pessoa = new Pessoa(codigo, nome);
         pessoa.setEndereco(endereco);
         pessoa.setTelefone(telefone);
         listaDePessoas.add(pessoa);

@@ -5,6 +5,7 @@
  */
 package meuprimeiroapp;
 
+import java.awt.TextField;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -22,6 +23,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         limpaCampos();
+
+//        TextField tfCodigo = new TextField();
+//        Pessoa pessoa1 = new Pessoa();
+//        Pessoa pessoa2 = new Pessoa();
+//        Pessoa pessoa3 = new Pessoa();
+//
+//        String codigo = tfCodigo.getText();
+//        tfCodigo.setText("Texto");
     }
 
     /**
@@ -119,10 +128,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         if (validaTela()) {
             ControlePessoas.salvaPessoa(
                     tfCodigo.getText(),
-                     tfNome.getText(),
-                     tfEndereco.getText(),
-                     tfTelefone.getText(),
-                     listaDePessoas
+                    tfNome.getText(),
+                    tfEndereco.getText(),
+                    tfTelefone.getText(),
+                    listaDePessoas
             );
             limpaCampos();
         }
@@ -135,7 +144,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tfNomeFocusLost
 
-    void limpaCampos() {
+    private void limpaCampos() {
         Integer proximoCodigo = ControlePessoas.getProximoCodigo(listaDePessoas);
         tfCodigo.setText(proximoCodigo.toString());
         tfNome.setText("");
@@ -143,7 +152,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tfTelefone.setText("");
     }
 
-    boolean validaTela() {
+    private boolean validaTela() {
         if (tfCodigo.getText().length() <= 0
                 || !ControlePessoas.isCodigoValido(Integer.valueOf(tfCodigo.getText()))) {
             exibeMensagemConfirmacao("Código inválido", "Validação");
@@ -165,7 +174,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         return true;
     }
 
-    void exibeMensagemConfirmacao(String mensagem, String titulo) {
+    private void exibeMensagemConfirmacao(String mensagem, String titulo) {
         JOptionPane.showConfirmDialog(
                 this,
                 mensagem,
@@ -220,4 +229,41 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfTelefone;
     // End of variables declaration//GEN-END:variables
+
+public enum TipoMensagem
+    {
+        TIPO_MENSAGEM_OK,
+        TIPO_MENSAGEM_SIM_NAO;
+    }
+    
+    public void exibeMensagem(TipoMensagem tipoMensagem)
+    {
+        switch(tipoMensagem)
+        {
+            case TIPO_MENSAGEM_OK:
+                break;
+            case TIPO_MENSAGEM_SIM_NAO:
+                break;
+        }
+    }
+    
+    public static final int TIPO_MENSAGEM_OK = 1;
+    public static final int TIPO_MENSAGEM_SIM_NAO = 2;
+
+    public void exibeMensagem(int tipoMensagem) {
+        switch (tipoMensagem) {
+            case TIPO_MENSAGEM_OK:
+                break;
+            case TIPO_MENSAGEM_SIM_NAO:
+                break;
+        }
+    }
+
+    public void teste() {
+        exibeMensagem(3);
+        exibeMensagem(2);
+        exibeMensagem(TelaPrincipal.TIPO_MENSAGEM_OK);
+        exibeMensagem(TelaPrincipal.TIPO_MENSAGEM_SIM_NAO);
+        exibeMensagem(TipoMensagem.TIPO_MENSAGEM_SIM_NAO);
+    }
 }
