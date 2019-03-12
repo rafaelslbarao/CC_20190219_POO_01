@@ -5,17 +5,22 @@
  */
 package meuprimeiroapp;
 
-import java.awt.TextField;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Rafael
  */
-public class TelaPrincipal extends javax.swing.JFrame {
+public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionListener {
 
-    ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
+    private ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
+    private DefaultTableModel modeloDadosTabela;
+    private Pessoa pessoa;
 
     /**
      * Creates new form TelaPrincipal
@@ -23,14 +28,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     public TelaPrincipal() {
         initComponents();
         limpaCampos();
-
-//        TextField tfCodigo = new TextField();
-//        Pessoa pessoa1 = new Pessoa();
-//        Pessoa pessoa2 = new Pessoa();
-//        Pessoa pessoa3 = new Pessoa();
-//
-//        String codigo = tfCodigo.getText();
-//        tfCodigo.setText("Texto");
+        inicializaTabela();
     }
 
     /**
@@ -42,6 +40,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btSalvar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -52,6 +52,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tfTelefone = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         tfEndereco = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbCadastro = new javax.swing.JTable();
+        btDeletar = new javax.swing.JButton();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -97,6 +113,42 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jPanel2.add(jLabel6);
         jPanel2.add(tfEndereco);
 
+        tbCadastro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tbCadastro.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo", "Nome", "Telefone", "Endereço"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbCadastro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbCadastro.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(tbCadastro);
+
+        btDeletar.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btDeletar.setText("Deletar");
+        btDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeletarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,20 +156,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(352, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18))))
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(220, 220, 220)
+                                .addComponent(btDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 18, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btSalvar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -125,14 +188,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (validaTela()) {
-            ControlePessoas.salvaPessoa(
-                    tfCodigo.getText(),
-                    tfNome.getText(),
-                    tfEndereco.getText(),
-                    tfTelefone.getText(),
-                    listaDePessoas
-            );
+        if (validaTela()) 
+        {
+            if(pessoa == null)
+            {
+                ControlePessoas.salvaPessoa(tfCodigo.getText(),
+                        tfNome.getText(),
+                        tfEndereco.getText(),
+                        tfTelefone.getText(),
+                        listaDePessoas,
+                        modeloDadosTabela
+                );
+            }
+            else
+            {
+                ControlePessoas.atualizaPessoa(tfCodigo.getText(),
+                        tfNome.getText(),
+                        tfEndereco.getText(),
+                        tfTelefone.getText(),
+                        modeloDadosTabela,
+                        pessoa, listaDePessoas.indexOf(pessoa)
+                );
+            }
             limpaCampos();
         }
     }//GEN-LAST:event_btSalvarActionPerformed
@@ -144,12 +221,56 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tfNomeFocusLost
 
+    private void btDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarActionPerformed
+
+        int posicaoSelecionada = tbCadastro.getSelectedRow();
+        if (posicaoSelecionada != -1) {
+            ControlePessoas.excluiPessoa(posicaoSelecionada, listaDePessoas, modeloDadosTabela);
+            geraNovoCodigo();
+            limpaCampos();
+        }
+
+    }//GEN-LAST:event_btDeletarActionPerformed
+
     private void limpaCampos() {
-        Integer proximoCodigo = ControlePessoas.getProximoCodigo(listaDePessoas);
-        tfCodigo.setText(proximoCodigo.toString());
+        geraNovoCodigo();
         tfNome.setText("");
         tfEndereco.setText("");
         tfTelefone.setText("");
+        pessoa = null;
+        tbCadastro.getSelectionModel().clearSelection();
+    }
+
+    private void geraNovoCodigo() {
+        Integer proximoCodigo = ControlePessoas.getProximoCodigo(listaDePessoas);
+        tfCodigo.setText(proximoCodigo.toString());
+    }
+
+    private void inicializaTabela() {
+        modeloDadosTabela = (DefaultTableModel) tbCadastro.getModel();
+        tbCadastro.getSelectionModel().addListSelectionListener(this);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        onSelecaoAlterada();
+    }
+
+    private void onSelecaoAlterada() {
+        int posicaoSelecionada = tbCadastro.getSelectedRow();
+        if(posicaoSelecionada >= 0)
+        {
+            pessoa = listaDePessoas.get(posicaoSelecionada);
+            carregaValoresPessoa(pessoa);
+        }
+    }
+    
+    private void carregaValoresPessoa(Pessoa pessoa)
+    {
+        tfCodigo.setText(pessoa.getCodigo().toString());
+        tfNome.setText(pessoa.getNome());
+        tfTelefone.setText(pessoa.getTelefone());
+        tfEndereco.setText(pessoa.getEndereco());
     }
 
     private boolean validaTela() {
@@ -218,35 +339,37 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btDeletar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tbCadastro;
     private javax.swing.JTextField tfCodigo;
     private javax.swing.JTextField tfEndereco;
     private javax.swing.JTextField tfNome;
     private javax.swing.JTextField tfTelefone;
     // End of variables declaration//GEN-END:variables
 
-public enum TipoMensagem
-    {
+    public enum TipoMensagem {
         TIPO_MENSAGEM_OK,
         TIPO_MENSAGEM_SIM_NAO;
     }
-    
-    public void exibeMensagem(TipoMensagem tipoMensagem)
-    {
-        switch(tipoMensagem)
-        {
+
+    public void exibeMensagem(TipoMensagem tipoMensagem) {
+        switch (tipoMensagem) {
             case TIPO_MENSAGEM_OK:
                 break;
             case TIPO_MENSAGEM_SIM_NAO:
                 break;
         }
     }
-    
+
     public static final int TIPO_MENSAGEM_OK = 1;
     public static final int TIPO_MENSAGEM_SIM_NAO = 2;
 

@@ -6,6 +6,7 @@
 package meuprimeiroapp;
 
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +15,14 @@ import java.util.ArrayList;
 public class ControlePessoas {
 
     private static final Integer CODIGO_INICIAL = 1;
+
+    public static void excluiPessoa(int posicaoSelecionada
+            , ArrayList<Pessoa> listaDePessoas
+            , DefaultTableModel modeloDadosTabela) {
+        
+        modeloDadosTabela.removeRow(posicaoSelecionada);
+        listaDePessoas.remove(posicaoSelecionada);
+    }
     
     private ControlePessoas() {
     }
@@ -59,10 +68,44 @@ public class ControlePessoas {
              String nome,
              String endereco,
              String telefone,
-             ArrayList<Pessoa> listaDePessoas) {
+             ArrayList<Pessoa> listaDePessoas, DefaultTableModel defaultTableModel) {
         Pessoa pessoa = new Pessoa(codigo, nome);
         pessoa.setEndereco(endereco);
         pessoa.setTelefone(telefone);
         listaDePessoas.add(pessoa);
+        atualizarListaComNovaPessoa(pessoa, defaultTableModel);
+    }
+    
+    public static void atualizaPessoa(String codigo,
+             String nome,
+             String endereco,
+             String telefone,
+             DefaultTableModel defaultTableModel, Pessoa pessoa, int posicalAtualizada) {
+        pessoa.setCodigo(codigo);
+        pessoa.setNome(nome);
+        pessoa.setEndereco(endereco);
+        pessoa.setTelefone(telefone);
+        atualizarListaComPessoaExistente(pessoa, defaultTableModel, posicalAtualizada);
+    }
+    
+    private static void atualizarListaComNovaPessoa(Pessoa pessoa, DefaultTableModel defaultTableModel)
+    {
+        defaultTableModel.addRow(new String[] 
+        {
+            pessoa.getCodigo().toString(),
+            pessoa.getNome(),
+            pessoa.getTelefone(),
+            pessoa.getEndereco()
+        });
+    }
+    
+    private static void 
+        atualizarListaComPessoaExistente(Pessoa pessoa
+            , DefaultTableModel defaultTableModel
+            , int posicalAtualizada)
+    {
+        defaultTableModel.setValueAt(pessoa.getNome(), posicalAtualizada, 1);
+        defaultTableModel.setValueAt(pessoa.getTelefone(), posicalAtualizada, 2);
+        defaultTableModel.setValueAt(pessoa.getEndereco(), posicalAtualizada, 3);
     }
 }
