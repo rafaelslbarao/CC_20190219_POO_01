@@ -5,7 +5,9 @@
  */
 package meuprimeiroapp;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -17,7 +19,7 @@ import javax.swing.table.TableModel;
  * @author Rafael
  */
 public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionListener {
-
+    
     private ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
     private DefaultTableModel modeloDadosTabela;
     private Pessoa pessoa;
@@ -55,6 +57,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         jScrollPane2 = new javax.swing.JScrollPane();
         tbCadastro = new javax.swing.JTable();
         btDeletar = new javax.swing.JButton();
+        btConsultar = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -97,12 +100,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 
         jLabel5.setText("Nome");
         jPanel2.add(jLabel5);
-
-        tfNome.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                tfNomeFocusLost(evt);
-            }
-        });
         jPanel2.add(tfNome);
 
         jLabel4.setText("Telefone");
@@ -149,24 +146,31 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             }
         });
 
+        btConsultar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btConsultar.setForeground(new java.awt.Color(51, 51, 255));
+        btConsultar.setText("Consultar");
+        btConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btConsultarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(220, 220, 220)
-                                .addComponent(btDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 18, Short.MAX_VALUE))))
+                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btConsultar)
+                        .addGap(63, 63, 63)
+                        .addComponent(btDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,24 +178,22 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btSalvar)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(2, 2, 2)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btSalvar)
+                        .addComponent(btConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 323, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addGap(13, 13, 13))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
-        if (validaTela()) 
-        {
-            if(pessoa == null)
-            {
+        if (validaTela()) {
+            if (pessoa == null) {
                 ControlePessoas.salvaPessoa(tfCodigo.getText(),
                         tfNome.getText(),
                         tfEndereco.getText(),
@@ -199,9 +201,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                         listaDePessoas,
                         modeloDadosTabela
                 );
-            }
-            else
-            {
+            } else {
                 ControlePessoas.atualizaPessoa(tfCodigo.getText(),
                         tfNome.getText(),
                         tfEndereco.getText(),
@@ -214,15 +214,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         }
     }//GEN-LAST:event_btSalvarActionPerformed
 
-    private void tfNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfNomeFocusLost
-        if (!ControlePessoas.isNomeValido(tfNome.getText())) {
-            exibeMensagemConfirmacao("Nome inválido", "Validação");
-            tfNome.requestFocus();
-        }
-    }//GEN-LAST:event_tfNomeFocusLost
-
     private void btDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarActionPerformed
-
+        
         int posicaoSelecionada = tbCadastro.getSelectedRow();
         if (posicaoSelecionada != -1) {
             ControlePessoas.excluiPessoa(posicaoSelecionada, listaDePessoas, modeloDadosTabela);
@@ -232,6 +225,113 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 
     }//GEN-LAST:event_btDeletarActionPerformed
 
+    private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
+        String nomeFiltro = tfNome.getText();
+        nomeFiltro = nomeFiltro.trim();
+        if (!nomeFiltro.isBlank()) {
+//            for(int i = 0; i < listaDePessoas.size(); i++)
+//            {
+//                Pessoa pessoa = listaDePessoas.get(i);
+//                if(pessoa.getNome().equals(nomeFiltro))
+//                {
+//                    trataPessoaEncontrada(pessoa);
+//                    break;
+//                }
+//            }
+            boolean encontrouPessoa = false;
+            for (Pessoa pessoa : listaDePessoas) {
+                //Comparação transformando tudo em maiusculo
+//                if (pessoa.getNome().toUpperCase().equals(nomeFiltro.toUpperCase())) {
+//                    trataPessoaEncontrada(pessoa);
+//                    break;
+//                }
+                //Comparação utilizando método específico de comparação que ignora o case
+//                if (pessoa.getNome().equalsIgnoreCase(nomeFiltro)) {
+//                    trataPessoaEncontrada(pessoa);
+//                    break;
+//                }
+
+               if (pessoa.getNome().toUpperCase().contains(nomeFiltro.toUpperCase())) 
+               {
+                    trataPessoaEncontrada(pessoa);
+                    encontrouPessoa = true;
+                    break;
+                }
+            }
+            if(!encontrouPessoa)
+                limpaCampos();
+            
+
+//                listaPessoas tem 3 de tamanho
+//                listaPessoas[0] = Pessoa(1, "Rafael" ...)
+//                listaPessoas[1] = Pessoa(2, "Murilo" ...)
+//                listaPessoas[2] = Pessoa(3, "Lucas" ...)
+//                listaDePessoas.indexOf(new Pessoa(3));
+            // Suposta implementação do método indexOf
+            // Retorna a posição (indice) da lista de um determinado objeto
+            // A comparação é feita sempre utilizando o método equals que toda
+            // classe possui
+//                private int indexOf(Pessoa parametro)
+//                {
+//                    for(int = 0; i < listaDePessoas.size() ; i++)
+//                    {
+//                        if(listaDePessoas.get(i).equals(parametro))
+//                            return i;
+//                    }
+//                }
+//                listaPessoas tem 3 de tamanho
+//                listaPessoas[0] = Pessoa(1, "Rafael" ...)
+//                listaPessoas[1] = Pessoa(2, "Murilo" ...)
+//                listaPessoas[2] = Pessoa(3, "Lucas" ...)
+//                listaDePessoas.indexOf(new Pessoa(3));
+            // Suposta implementação do método indexOf
+            // Retorna a posição (indice) da lista de um determinado objeto
+            // A comparação é feita sempre utilizando o método equals que toda
+            // classe possui
+//                private int indexOf(Pessoa parametro)
+//                {
+//                    for(int = 0; i < listaDePessoas.size() ; i++)
+//                    {
+//                        if(listaDePessoas.get(i).equals(parametro))
+//                            return i;
+//                    }
+//                }
+            //                listaPessoas tem 3 de tamanho
+//                listaPessoas[0] = Pessoa(1, "Rafael" ...)
+//                listaPessoas[1] = Pessoa(2, "Murilo" ...)
+//                listaPessoas[2] = Pessoa(3, "Lucas" ...)
+//                listaDePessoas.indexOf(new Pessoa(3));
+            // Suposta implementação do método indexOf
+            // Retorna a posição (indice) da lista de um determinado objeto
+            // A comparação é feita sempre utilizando o método equals que toda
+            // classe possui
+//                private int indexOf(Pessoa parametro)
+//                {
+//                    for(int = 0; i < listaDePessoas.size() ; i++)
+//                    {
+//                        if(listaDePessoas.get(i).equals(parametro))
+//                            return i;
+//                    }
+//                }
+            //Comparação de datas utilizando objetos da classe Date
+            //SimpleDateFormat é uma classe utilizada para formatação/transformação
+            //de string em date
+            // Após convertido, o equals dos objetos do tipo Date comparam
+            // dia, mes, ano, hora, minuto, segundo e milisegundos
+//            Date date1 = new SimpleDateFormat("dd/MM/yyyy").parse("16/02/1990");
+//            Date date2 = new SimpleDateFormat("dd/MM/yyyy").parse("16/02/1990");
+//            if(date1.equals(date2))
+        }
+    }//GEN-LAST:event_btConsultarActionPerformed
+    
+    private void trataPessoaEncontrada(Pessoa pessoa) {
+        this.pessoa = pessoa;
+        tfNome.setText(pessoa.getNome());
+        tfEndereco.setText(pessoa.getEndereco());
+        tfCodigo.setText(pessoa.getCodigo().toString());
+        tfTelefone.setText(pessoa.getTelefone().toString());
+    }
+
     private void limpaCampos() {
         geraNovoCodigo();
         tfNome.setText("");
@@ -240,39 +340,37 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         pessoa = null;
         tbCadastro.getSelectionModel().clearSelection();
     }
-
+    
     private void geraNovoCodigo() {
         Integer proximoCodigo = ControlePessoas.getProximoCodigo(listaDePessoas);
         tfCodigo.setText(proximoCodigo.toString());
     }
-
+    
     private void inicializaTabela() {
         modeloDadosTabela = (DefaultTableModel) tbCadastro.getModel();
         tbCadastro.getSelectionModel().addListSelectionListener(this);
     }
-
+    
     @Override
     public void valueChanged(ListSelectionEvent e) {
         onSelecaoAlterada();
     }
-
+    
     private void onSelecaoAlterada() {
         int posicaoSelecionada = tbCadastro.getSelectedRow();
-        if(posicaoSelecionada >= 0)
-        {
+        if (posicaoSelecionada >= 0) {
             pessoa = listaDePessoas.get(posicaoSelecionada);
             carregaValoresPessoa(pessoa);
         }
     }
     
-    private void carregaValoresPessoa(Pessoa pessoa)
-    {
+    private void carregaValoresPessoa(Pessoa pessoa) {
         tfCodigo.setText(pessoa.getCodigo().toString());
         tfNome.setText(pessoa.getNome());
         tfTelefone.setText(pessoa.getTelefone());
         tfEndereco.setText(pessoa.getEndereco());
     }
-
+    
     private boolean validaTela() {
         if (tfCodigo.getText().length() <= 0
                 || !ControlePessoas.isCodigoValido(Integer.valueOf(tfCodigo.getText()))) {
@@ -291,10 +389,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             exibeMensagemConfirmacao("Endereço inválido", "Validação");
             return false;
         }
-
+        
         return true;
     }
-
+    
     private void exibeMensagemConfirmacao(String mensagem, String titulo) {
         JOptionPane.showConfirmDialog(
                 this,
@@ -339,6 +437,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btConsultar;
     private javax.swing.JButton btDeletar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JLabel jLabel4;
@@ -360,7 +459,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         TIPO_MENSAGEM_OK,
         TIPO_MENSAGEM_SIM_NAO;
     }
-
+    
     public void exibeMensagem(TipoMensagem tipoMensagem) {
         switch (tipoMensagem) {
             case TIPO_MENSAGEM_OK:
@@ -369,10 +468,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                 break;
         }
     }
-
+    
     public static final int TIPO_MENSAGEM_OK = 1;
     public static final int TIPO_MENSAGEM_SIM_NAO = 2;
-
+    
     public void exibeMensagem(int tipoMensagem) {
         switch (tipoMensagem) {
             case TIPO_MENSAGEM_OK:
@@ -381,7 +480,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                 break;
         }
     }
-
+    
     public void teste() {
         exibeMensagem(3);
         exibeMensagem(2);

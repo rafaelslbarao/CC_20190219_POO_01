@@ -5,6 +5,8 @@
  */
 package meuprimeiroapp;
 
+import java.util.Objects;
+
 /**
  *
  * @author Rafael
@@ -85,5 +87,23 @@ class Pessoa {
     public boolean isCodigoValido() {
         return ControlePessoas.isCodigoValido(this.codigo);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        // Verifica se o objeto de parâmetro não é nulo e se o mesmo é do tipo
+        // pessoa. Para comparação de tipo, utiliza a palavra instanceof
+        if(obj != null && obj instanceof Pessoa)
+        {
+            Pessoa parametro = (Pessoa) obj;
+            if(this.codigo.equals(parametro.getCodigo()))
+                return true;
+            else
+                return false;
+        }
+        else 
+            // Chama método que faz parte da classe herdada (Object)
+            // Todo acesso a métodos da classe "pai" utiliza a palavra super 
+            return super.equals(obj);
+    }  
 
 }
