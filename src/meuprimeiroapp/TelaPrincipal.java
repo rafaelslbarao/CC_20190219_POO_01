@@ -23,7 +23,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
     private ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
     private DefaultTableModel modeloDadosTabela;
     private Pessoa pessoa;
-
+    
     /**
      * Creates new form TelaPrincipal
      */
@@ -58,6 +58,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         tbCadastro = new javax.swing.JTable();
         btDeletar = new javax.swing.JButton();
         btConsultar = new javax.swing.JButton();
+        cbTeste = new javax.swing.JComboBox<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -155,6 +156,8 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             }
         });
 
+        cbTeste.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -162,6 +165,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbTeste, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,8 +187,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btSalvar)
                         .addComponent(btConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addComponent(cbTeste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
 
@@ -440,6 +446,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
     private javax.swing.JButton btConsultar;
     private javax.swing.JButton btDeletar;
     private javax.swing.JButton btSalvar;
+    private javax.swing.JComboBox<String> cbTeste;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
