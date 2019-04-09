@@ -14,7 +14,6 @@ import java.util.Objects;
 class Pessoa {
 
     private Integer codigo;
-    private String nome;
     private String telefone;
     private String endereco;
 
@@ -24,16 +23,6 @@ class Pessoa {
 
     public Pessoa(Integer codigo) {
         this.codigo = codigo;
-    }
-
-    public Pessoa(Integer codigo, String nome) {
-        this.codigo = codigo;
-        this.nome = nome;
-    }
-
-    public Pessoa(String codigo, String nome) {
-        this.codigo = Integer.valueOf(codigo);
-        this.nome = nome;
     }
 
     public Integer getCodigo() {
@@ -46,14 +35,6 @@ class Pessoa {
 
     public void setCodigo(String codigo) {
         this.codigo = Integer.valueOf(codigo);
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getTelefone() {
@@ -80,10 +61,6 @@ class Pessoa {
         return ControlePessoas.isEnderecoValido(this.endereco);
     }
 
-    public boolean isNomeValido() {
-        return ControlePessoas.isNomeValido(this.nome);
-    }
-
     public boolean isCodigoValido() {
         return ControlePessoas.isCodigoValido(this.codigo);
     }
@@ -92,18 +69,21 @@ class Pessoa {
     public boolean equals(Object obj) {
         // Verifica se o objeto de parâmetro não é nulo e se o mesmo é do tipo
         // pessoa. Para comparação de tipo, utiliza a palavra instanceof
-        if(obj != null && obj instanceof Pessoa)
-        {
+        if (obj != null && obj instanceof Pessoa) {
             Pessoa parametro = (Pessoa) obj;
-            if(this.codigo.equals(parametro.getCodigo()))
+            if (this.codigo.equals(parametro.getCodigo())) {
                 return true;
-            else
+            } else {
                 return false;
-        }
-        else 
-            // Chama método que faz parte da classe herdada (Object)
-            // Todo acesso a métodos da classe "pai" utiliza a palavra super 
+            }
+        } else // Chama método que faz parte da classe herdada (Object)
+        // Todo acesso a métodos da classe "pai" utiliza a palavra super 
+        {
             return super.equals(obj);
-    }  
+        }
+    }
+
+
+      
 
 }

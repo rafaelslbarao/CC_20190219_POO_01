@@ -17,11 +17,27 @@ public class ControlePessoas {
     private static final Integer CODIGO_INICIAL = 1;
 
     public static void excluiPessoa(int posicaoSelecionada
-            , ArrayList<Pessoa> listaDePessoas
+            , ArrayList<PessoaFisica> listaDePessoas
             , DefaultTableModel modeloDadosTabela) {
         
         modeloDadosTabela.removeRow(posicaoSelecionada);
         listaDePessoas.remove(posicaoSelecionada);
+    }
+
+    public static boolean isCPFValido(String text) {
+       return !text.isBlank();
+    }
+
+    public static boolean isNomeFantasiaValido(String text) {
+        return !text.isBlank();
+    }
+
+    public static boolean isRazaoSocialValido(String text) {
+        return !text.isBlank();
+    }
+
+    public static boolean isCNPJValido(String text) {
+        return !text.isBlank();
     }
     
     private ControlePessoas() {
@@ -46,7 +62,7 @@ public class ControlePessoas {
 
     
     
-    public static Integer getProximoCodigo(ArrayList<Pessoa> pessoas) 
+    public static Integer getProximoCodigo(ArrayList<PessoaFisica> pessoas) 
     {
         if (pessoas != null && pessoas.size() > 0) 
         {
@@ -68,8 +84,8 @@ public class ControlePessoas {
              String nome,
              String endereco,
              String telefone,
-             ArrayList<Pessoa> listaDePessoas, DefaultTableModel defaultTableModel) {
-        Pessoa pessoa = new Pessoa(codigo, nome);
+             ArrayList<PessoaFisica> listaDePessoas, DefaultTableModel defaultTableModel) {
+        PessoaFisica pessoa = new PessoaFisica(nome, codigo);
         pessoa.setEndereco(endereco);
         pessoa.setTelefone(telefone);
         listaDePessoas.add(pessoa);
@@ -80,7 +96,7 @@ public class ControlePessoas {
              String nome,
              String endereco,
              String telefone,
-             DefaultTableModel defaultTableModel, Pessoa pessoa, int posicalAtualizada) {
+             DefaultTableModel defaultTableModel, PessoaFisica pessoa, int posicalAtualizada) {
         pessoa.setCodigo(codigo);
         pessoa.setNome(nome);
         pessoa.setEndereco(endereco);
@@ -88,7 +104,7 @@ public class ControlePessoas {
         atualizarListaComPessoaExistente(pessoa, defaultTableModel, posicalAtualizada);
     }
     
-    private static void atualizarListaComNovaPessoa(Pessoa pessoa, DefaultTableModel defaultTableModel)
+    private static void atualizarListaComNovaPessoa(PessoaFisica pessoa, DefaultTableModel defaultTableModel)
     {
         defaultTableModel.addRow(new String[] 
         {
@@ -100,7 +116,7 @@ public class ControlePessoas {
     }
     
     private static void 
-        atualizarListaComPessoaExistente(Pessoa pessoa
+        atualizarListaComPessoaExistente(PessoaFisica pessoa
             , DefaultTableModel defaultTableModel
             , int posicalAtualizada)
     {

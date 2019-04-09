@@ -19,18 +19,25 @@ import javax.swing.table.TableModel;
  * @author Rafael
  */
 public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionListener {
-    
-    private ArrayList<Pessoa> listaDePessoas = new ArrayList<>();
+
+    private ArrayList<PessoaFisica> listaDePessoas = new ArrayList<>();
     private DefaultTableModel modeloDadosTabela;
-    private Pessoa pessoa;
-    
+    private PessoaFisica pessoa;
+
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
+        configuraTela();
         limpaCampos();
         inicializaTabela();
+
+    }
+
+    private void configuraTela() {
+        pPessoaFisica.setVisible(false);
+        pPessoaJuridica.setVisible(false);
     }
 
     /**
@@ -44,12 +51,11 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        bgTipoPessoa = new javax.swing.ButtonGroup();
         btSalvar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         tfCodigo = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        tfNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         tfTelefone = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -58,7 +64,24 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         tbCadastro = new javax.swing.JTable();
         btDeletar = new javax.swing.JButton();
         btConsultar = new javax.swing.JButton();
-        cbTeste = new javax.swing.JComboBox<>();
+        rbPessoaFisica = new javax.swing.JRadioButton();
+        rbPessoaJuridica = new javax.swing.JRadioButton();
+        pPessoaFisica = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        tfNome = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        tfCPF = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tfDataNascimento = new javax.swing.JTextField();
+        pPessoaJuridica = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        tfNomeFantasia = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        tfRazaoSocial = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        tfDataFundacao = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        tfCNPJ = new javax.swing.JTextField();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -98,10 +121,6 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         tfCodigo.setFocusable(false);
         tfCodigo.setName(""); // NOI18N
         jPanel2.add(tfCodigo);
-
-        jLabel5.setText("Nome");
-        jPanel2.add(jLabel5);
-        jPanel2.add(tfNome);
 
         jLabel4.setText("Telefone");
         jPanel2.add(jLabel4);
@@ -156,40 +175,163 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             }
         });
 
-        cbTeste.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Item 1", "Item 2", "Item 3", "Item 4" }));
+        bgTipoPessoa.add(rbPessoaFisica);
+        rbPessoaFisica.setText("Pessoa Física");
+        rbPessoaFisica.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbPessoaFisicaItemStateChanged(evt);
+            }
+        });
+
+        bgTipoPessoa.add(rbPessoaJuridica);
+        rbPessoaJuridica.setText("Pessoa Jurídica");
+        rbPessoaJuridica.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rbPessoaJuridicaItemStateChanged(evt);
+            }
+        });
+
+        jLabel5.setText("Nome");
+
+        jLabel1.setText("Data Nascimento");
+
+        jLabel2.setText("CPF");
+
+        javax.swing.GroupLayout pPessoaFisicaLayout = new javax.swing.GroupLayout(pPessoaFisica);
+        pPessoaFisica.setLayout(pPessoaFisicaLayout);
+        pPessoaFisicaLayout.setHorizontalGroup(
+            pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPessoaFisicaLayout.createSequentialGroup()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pPessoaFisicaLayout.createSequentialGroup()
+                .addGroup(pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfCPF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfDataNascimento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pPessoaFisicaLayout.setVerticalGroup(
+            pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPessoaFisicaLayout.createSequentialGroup()
+                .addGroup(pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pPessoaFisicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPessoaFisicaLayout.createSequentialGroup()
+                        .addComponent(tfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pPessoaFisicaLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1))))
+        );
+
+        jLabel8.setText("Nome Fantasia");
+
+        jLabel3.setText("Data Fundação");
+
+        jLabel9.setText("Razão Social");
+
+        jLabel10.setText("CNPJ");
+
+        javax.swing.GroupLayout pPessoaJuridicaLayout = new javax.swing.GroupLayout(pPessoaJuridica);
+        pPessoaJuridica.setLayout(pPessoaJuridicaLayout);
+        pPessoaJuridicaLayout.setHorizontalGroup(
+            pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                .addGroup(pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
+                .addGroup(pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfRazaoSocial, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfDataFundacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNomeFantasia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfCNPJ, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
+        pPessoaJuridicaLayout.setVerticalGroup(
+            pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                .addGroup(pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfNomeFantasia, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                        .addComponent(tfRazaoSocial, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfDataFundacao, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pPessoaJuridicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pPessoaJuridicaLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(rbPessoaJuridica)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rbPessoaFisica)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbTeste, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btConsultar)
-                        .addGap(63, 63, 63)
-                        .addComponent(btDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(pPessoaJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btConsultar)
+                                .addGap(63, 63, 63)
+                                .addComponent(btDeletar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(pPessoaFisica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbPessoaFisica)
+                    .addComponent(rbPessoaJuridica))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pPessoaFisica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pPessoaJuridica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btSalvar)
-                        .addComponent(btConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(21, 21, 21)
-                .addComponent(cbTeste, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
+                    .addComponent(btConsultar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btSalvar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btDeletar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13))
         );
@@ -221,14 +363,14 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
     }//GEN-LAST:event_btSalvarActionPerformed
 
     private void btDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletarActionPerformed
-        
+
         int posicaoSelecionada = tbCadastro.getSelectedRow();
         if (posicaoSelecionada != -1) {
             ControlePessoas.excluiPessoa(posicaoSelecionada, listaDePessoas, modeloDadosTabela);
             geraNovoCodigo();
             limpaCampos();
-        }
-
+        } else
+            limpaCampos();
     }//GEN-LAST:event_btDeletarActionPerformed
 
     private void btConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConsultarActionPerformed
@@ -245,7 +387,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 //                }
 //            }
             boolean encontrouPessoa = false;
-            for (Pessoa pessoa : listaDePessoas) {
+            for (PessoaFisica pessoa : listaDePessoas) {
                 //Comparação transformando tudo em maiusculo
 //                if (pessoa.getNome().toUpperCase().equals(nomeFiltro.toUpperCase())) {
 //                    trataPessoaEncontrada(pessoa);
@@ -257,16 +399,15 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 //                    break;
 //                }
 
-               if (pessoa.getNome().toUpperCase().contains(nomeFiltro.toUpperCase())) 
-               {
+                if (pessoa.getNome().toUpperCase().contains(nomeFiltro.toUpperCase())) {
                     trataPessoaEncontrada(pessoa);
                     encontrouPessoa = true;
                     break;
                 }
             }
-            if(!encontrouPessoa)
+            if (!encontrouPessoa) {
                 limpaCampos();
-            
+            }
 
 //                listaPessoas tem 3 de tamanho
 //                listaPessoas[0] = Pessoa(1, "Rafael" ...)
@@ -329,8 +470,22 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
 //            if(date1.equals(date2))
         }
     }//GEN-LAST:event_btConsultarActionPerformed
-    
-    private void trataPessoaEncontrada(Pessoa pessoa) {
+
+    private void rbPessoaJuridicaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPessoaJuridicaItemStateChanged
+        if (rbPessoaJuridica.isSelected())
+            pPessoaJuridica.setVisible(true);
+        else
+            pPessoaJuridica.setVisible(false);
+    }//GEN-LAST:event_rbPessoaJuridicaItemStateChanged
+
+    private void rbPessoaFisicaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rbPessoaFisicaItemStateChanged
+        if (rbPessoaFisica.isSelected())
+            pPessoaFisica.setVisible(true);
+        else
+            pPessoaFisica.setVisible(false);
+    }//GEN-LAST:event_rbPessoaFisicaItemStateChanged
+
+    private void trataPessoaEncontrada(PessoaFisica pessoa) {
         this.pessoa = pessoa;
         tfNome.setText(pessoa.getNome());
         tfEndereco.setText(pessoa.getEndereco());
@@ -345,23 +500,24 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         tfTelefone.setText("");
         pessoa = null;
         tbCadastro.getSelectionModel().clearSelection();
+        bgTipoPessoa.clearSelection();
     }
-    
+
     private void geraNovoCodigo() {
         Integer proximoCodigo = ControlePessoas.getProximoCodigo(listaDePessoas);
         tfCodigo.setText(proximoCodigo.toString());
     }
-    
+
     private void inicializaTabela() {
         modeloDadosTabela = (DefaultTableModel) tbCadastro.getModel();
         tbCadastro.getSelectionModel().addListSelectionListener(this);
     }
-    
+
     @Override
     public void valueChanged(ListSelectionEvent e) {
         onSelecaoAlterada();
     }
-    
+
     private void onSelecaoAlterada() {
         int posicaoSelecionada = tbCadastro.getSelectedRow();
         if (posicaoSelecionada >= 0) {
@@ -369,24 +525,36 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             carregaValoresPessoa(pessoa);
         }
     }
-    
-    private void carregaValoresPessoa(Pessoa pessoa) {
+
+    private void carregaValoresPessoa(PessoaFisica pessoa) {
         tfCodigo.setText(pessoa.getCodigo().toString());
         tfNome.setText(pessoa.getNome());
         tfTelefone.setText(pessoa.getTelefone());
         tfEndereco.setText(pessoa.getEndereco());
     }
-    
+
     private boolean validaTela() {
+        if (bgTipoPessoa.getSelection() != null) {
+            if (rbPessoaFisica.isSelected()) {
+                return validaTelaPessoaFisica();
+            } else {
+                return validaTelaPessoaJuridica();
+            }
+        }
+        else
+        {
+            exibeMensagemConfirmacao("Informe o tipo de pessoa", "Validação");
+            return false;
+        }
+    }
+
+    private boolean validaTelaInformacoesComuns() {
         if (tfCodigo.getText().length() <= 0
                 || !ControlePessoas.isCodigoValido(Integer.valueOf(tfCodigo.getText()))) {
             exibeMensagemConfirmacao("Código inválido", "Validação");
             return false;
         }
-        if (!ControlePessoas.isNomeValido(tfNome.getText())) {
-            exibeMensagemConfirmacao("Nome inválido", "Validação");
-            return false;
-        }
+
         if (!ControlePessoas.isTelefoneValido(tfTelefone.getText())) {
             exibeMensagemConfirmacao("Telefone inválido", "Validação");
             return false;
@@ -395,10 +563,51 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
             exibeMensagemConfirmacao("Endereço inválido", "Validação");
             return false;
         }
+
+        return true;
+    }
+
+    private boolean validaTelaPessoaFisica() {
+
+        if (!validaTelaInformacoesComuns()) {
+            return false;
+        }
+
+        if (!ControlePessoas.isNomeValido(tfNome.getText())) {
+            exibeMensagemConfirmacao("Nome inválido", "Validação");
+            return false;
+        }
+
+        if (!ControlePessoas.isCPFValido(tfCPF.getText())) {
+            exibeMensagemConfirmacao("CPF inválido", "Validação");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validaTelaPessoaJuridica() {
+        if (!validaTelaInformacoesComuns()) {
+            return false;
+        }
+
+        if (!ControlePessoas.isNomeFantasiaValido(tfNomeFantasia.getText())) {
+            exibeMensagemConfirmacao("Nome Fantasia inválido", "Validação");
+            return false;
+        }
+
+        if (!ControlePessoas.isRazaoSocialValido(tfRazaoSocial.getText())) {
+            exibeMensagemConfirmacao("Razão Social inválido", "Validação");
+            return false;
+        }
+
+        if (!ControlePessoas.isCNPJValido(tfRazaoSocial.getText())) {
+            exibeMensagemConfirmacao("Razão Social inválido", "Validação");
+            return false;
+        }
         
         return true;
     }
-    
+
     private void exibeMensagemConfirmacao(String mensagem, String titulo) {
         JOptionPane.showConfirmDialog(
                 this,
@@ -443,22 +652,38 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup bgTipoPessoa;
     private javax.swing.JButton btConsultar;
     private javax.swing.JButton btDeletar;
     private javax.swing.JButton btSalvar;
-    private javax.swing.JComboBox<String> cbTeste;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JPanel pPessoaFisica;
+    private javax.swing.JPanel pPessoaJuridica;
+    private javax.swing.JRadioButton rbPessoaFisica;
+    private javax.swing.JRadioButton rbPessoaJuridica;
     private javax.swing.JTable tbCadastro;
+    private javax.swing.JTextField tfCNPJ;
+    private javax.swing.JTextField tfCPF;
     private javax.swing.JTextField tfCodigo;
+    private javax.swing.JTextField tfDataFundacao;
+    private javax.swing.JTextField tfDataNascimento;
     private javax.swing.JTextField tfEndereco;
     private javax.swing.JTextField tfNome;
+    private javax.swing.JTextField tfNomeFantasia;
+    private javax.swing.JTextField tfRazaoSocial;
     private javax.swing.JTextField tfTelefone;
     // End of variables declaration//GEN-END:variables
 
@@ -466,7 +691,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
         TIPO_MENSAGEM_OK,
         TIPO_MENSAGEM_SIM_NAO;
     }
-    
+
     public void exibeMensagem(TipoMensagem tipoMensagem) {
         switch (tipoMensagem) {
             case TIPO_MENSAGEM_OK:
@@ -475,10 +700,10 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                 break;
         }
     }
-    
+
     public static final int TIPO_MENSAGEM_OK = 1;
     public static final int TIPO_MENSAGEM_SIM_NAO = 2;
-    
+
     public void exibeMensagem(int tipoMensagem) {
         switch (tipoMensagem) {
             case TIPO_MENSAGEM_OK:
@@ -487,7 +712,7 @@ public class TelaPrincipal extends javax.swing.JFrame implements ListSelectionLi
                 break;
         }
     }
-    
+
     public void teste() {
         exibeMensagem(3);
         exibeMensagem(2);
